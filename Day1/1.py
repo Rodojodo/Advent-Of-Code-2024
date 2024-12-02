@@ -1,5 +1,4 @@
-import utils
-from utils import txtTo2DWithType
+from utils.utils import txtTo2DWithType
 
 lists = txtTo2DWithType("input.txt", int)
 list0 = []
