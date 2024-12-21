@@ -12,20 +12,20 @@ class Antenna:
         self.x = x
         self.y = y
         self.frequency = frequency
-arrayOfAntenni = []
+antennae = []
 for line in lines:
     for point in line:
         if not point == ".":
-            arrayOfAntenni.append(Antenna(line.index(point), lines.index(line), point))
+            antennae.append(Antenna(line.index(point), lines.index(line), point))
 
 
 # Find anti-nodes (hidden nodes) in the grid
-def findAntiNodes(antenni,lines):
+def findAntiNodes(antennae, lines):
     hiddenAntiNodeCount = 0
     hiddenAntiNodeCoords = []
 
-    for i in antenni:
-        for j in antenni:
+    for i in antennae:
+        for j in antennae:
             if i.frequency == j.frequency and i.x != j.x and i.y != j.y and i.frequency != "#":
                 try:
                     newX = j.x - (i.x -j.x)
@@ -41,7 +41,7 @@ def findAntiNodes(antenni,lines):
     return lines,hiddenAntiNodeCount
 
 # Update grid and get hidden anti-node count
-lines, antiNodeCount = findAntiNodes(arrayOfAntenni,lines)
+lines, antiNodeCount = findAntiNodes(antennae, lines)
 
 # Print grid and anti-node count
 for i in lines:
