@@ -1,6 +1,6 @@
 import unittest
 from utils import utils
-from utils.utils import txtTo2DWithType
+from utils.utils import txtTo2DWithType, reverse2DHorizontal
 
 
 class TestUtils(unittest.TestCase):
@@ -23,7 +23,8 @@ qeqeqeq
     def testFindCharIn2DArray(self):
         self.assertEqual([2,2], utils.findCharIn2DArray(txtTo2DWithType("../Day15/testWarehouse.txt", str), "@"))
 
-
+    def testReverse2DHorizontal(self):
+        self.assertEqual([["1","2","3"],["2","3","4"],["3","4","5"],["4","5","6"]], reverse2DHorizontal([["3","2","1"],["4","3","2"],["5","4","3"],["6","5","4"]]))
 
 
 

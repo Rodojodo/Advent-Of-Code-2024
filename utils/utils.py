@@ -1,5 +1,3 @@
-from operator import indexOf
-
 
 def txtToLines(filename):
     file = open(filename, "r")
@@ -41,8 +39,47 @@ def removeNewLines(input):
     return ''.join(input.split("\n"))
 
 def findCharIn2DArray(twoDArray, target):
+    x=-1
+    y=-1
     for i in twoDArray:
         if target in i:
             x = i.index(target)
             y = twoDArray.index(i)
     return [x,y]
+
+
+def reverse2DHorizontal(twoDArray):
+    data = []
+    for i in twoDArray:
+        data.append(i[::-1])
+    return data
+
+
+def transpose(l1):
+    data = []
+
+    # iterate over list l1 to the length of an item
+    for i in range(len(l1[0])):
+        # print(i)
+        row =[]
+        for item in l1:
+            # appending to new list with values and index positions
+            # i contains index position and item contains values
+            row.append(item[i])
+        data.append(row)
+    return data
+
+
+def findObjectsIn2DArray(twoDArray, target):
+    class Object:
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+    objects = []
+    for i in range(len(twoDArray)):
+        for j in range(len(twoDArray[i])):
+            if twoDArray[i][j] == target:
+                objects.append(Object(j,i))
+
+    return objects
