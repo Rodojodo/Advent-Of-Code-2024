@@ -73,7 +73,7 @@ def transpose(l1):
 
 
 def findObjectsIn2DArray(twoDArray, target):
-    class Object:
+    class Coords:
         def __init__(self, x, y):
             self.x = x
             self.y = y
@@ -82,6 +82,6 @@ def findObjectsIn2DArray(twoDArray, target):
     for i in range(len(twoDArray)):
         for j in range(len(twoDArray[i])):
             if twoDArray[i][j] == target:
-                objects.append(Object(j,i))
+                objects.append(Coords(j,i))
 
     return objects

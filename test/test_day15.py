@@ -1,6 +1,7 @@
 import unittest
 
 from Day15.Part1 import moveLeft, moveRight, moveUp, moveDown, useInstructions, calcBoxes
+from Day15.Part2 import scaleWarehouse, bigMoveLeft, bigMoveRight, bigMoveUp, bigMoveDown, moveBigBoxUp
 from utils.utils import stringTo2DWithType, removeNewLines
 
 
@@ -158,6 +159,111 @@ class testMoves(unittest.TestCase):
         f.close()
         self.assertEqual(stringTo2DWithType(expected, str), useInstructions(stringTo2DWithType(start, str), instructions))
 
+    def testBigMoveLeftWithBox(self):
+        start = """##############
+##......##..##
+##..........##
+##....[][]@.##
+##....[]....##
+##..........##
+##############"""
+        expected = """##############
+##......##..##
+##..........##
+##...[][]@..##
+##....[]....##
+##..........##
+##############"""
+        self.assertEqual(stringTo2DWithType(expected, str), bigMoveLeft(stringTo2DWithType(start, str), 10, 3))
+
+    def testBigMoveLeftClear(self):
+        start = """##############
+##......##..##
+##..........##
+##...[][]...##
+##....[]....##
+##.......@..##
+##############"""
+        expected = """##############
+##......##..##
+##..........##
+##...[][]...##
+##....[]....##
+##......@...##
+##############"""
+        self.assertEqual(stringTo2DWithType(expected, str), bigMoveLeft(stringTo2DWithType(start, str), 9, 5))
+
+    def testBigMoveUpWithBox(self):
+        start = """##############
+##......##..##
+##..........##
+##...[][]...##
+##....[]....##
+##.....@....##
+##############"""
+        expected = """##############
+##......##..##
+##...[][]...##
+##....[]....##
+##.....@....##
+##..........##
+##############"""
+
+        self.assertEqual(stringTo2DWithType(expected, str), bigMoveUp(stringTo2DWithType(start, str), 7, 5))
+        self.assertEqual(stringTo2DWithType(expected, str), bigMoveUp(stringTo2DWithType(expected, str), 7, 4))
+
+    def testBigMoveDown(self):
+        start = """##############
+##......##..##
+##..........##
+##...[][]...##
+##....[].@..##
+##..........##
+##############"""
+        expected = """##############
+##......##..##
+##..........##
+##...[][]...##
+##....[]....##
+##.......@..##
+##############"""
+
+        self.assertEqual(stringTo2DWithType(expected, str), bigMoveDown(stringTo2DWithType(start, str), 9, 4))
+
+    def testBigMoveRight(self):
+        start = """##############
+##......##..##
+##..........##
+##...[][]...##
+##....[]@...##
+##..........##
+##############"""
+        expected = """##############
+##......##..##
+##..........##
+##...[][]...##
+##....[].@..##
+##..........##
+##############"""
+        self.assertEqual(stringTo2DWithType(expected, str), bigMoveRight(stringTo2DWithType(start, str), 8, 4))
+
+    def testMoveBigBoxUp(self):
+        start = """##############
+##......##..##
+##..........##
+##...[][]...##
+##....[]....##
+##..........##
+##############"""
+        expected = """##############
+##......##..##
+##...[][]...##
+##....[]....##
+##..........##
+##..........##
+##############"""
+        self.assertEqual(stringTo2DWithType(expected, str), moveBigBoxUp(stringTo2DWithType(start, str), 6, 4))
+
 class testBoxes(unittest.TestCase):
     def testCalcBoxes(self):
         larger = """##########
@@ -181,9 +287,20 @@ class testBoxes(unittest.TestCase):
         self.assertEqual(10092, calcBoxes(stringTo2DWithType(larger, str)))
         self.assertEqual(2028, calcBoxes(stringTo2DWithType(smaller, str)))
 
+class testPart2(unittest.TestCase):
+    def testScaleWarehouse(self):
+        f = open("Day15/testPart2Warehouse.txt", "r")
+        warehouse = f.read()
+        f.close()
+        stretchedWarehouse = stringTo2DWithType("""##############
+##......##..##
+##..........##
+##....[][]@.##
+##....[]....##
+##..........##
+##############""", str)
 
-
-
+        self.assertEqual(stretchedWarehouse, scaleWarehouse(stringTo2DWithType(warehouse, str)))
 
 
 if __name__ == '__main__':
