@@ -210,6 +210,15 @@ class testMoves(unittest.TestCase):
 ##############"""
 
         self.assertEqual(stringTo2DWithType(expected, str), bigMoveUp(stringTo2DWithType(start, str), 7, 5))
+
+    def testBigMoveUpWithBoxBlocked(self):
+        expected = """##############
+##......##..##
+##...[][]...##
+##....[]....##
+##.....@....##
+##..........##
+##############"""
         self.assertEqual(stringTo2DWithType(expected, str), bigMoveUp(stringTo2DWithType(expected, str), 7, 4))
 
     def testBigMoveDown(self):
@@ -263,6 +272,7 @@ class testMoves(unittest.TestCase):
 ##..........##
 ##############"""
         self.assertEqual(stringTo2DWithType(expected, str), moveBigBoxUp(stringTo2DWithType(start, str), 6, 4))
+        self.assertEqual(stringTo2DWithType(expected, str), moveBigBoxUp(stringTo2DWithType(start, str), 7, 4))
 
 class testBoxes(unittest.TestCase):
     def testCalcBoxes(self):

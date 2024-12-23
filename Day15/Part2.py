@@ -35,17 +35,12 @@ def bigMoveRight(warehouse, x, y):
     return ut.reverse2DHorizontal(bigMoveLeft(ut.reverse2DHorizontal(warehouse), len(warehouse[0]) - x - 1, y))
 
 def bigMoveUp(warehouse, x, y):
-
-    if warehouse[y-1][x] == "[":
-        bigMoveUp(warehouse, x, y-1)
-        bigMoveUp(warehouse, x+1, y-1)
-    elif warehouse[y-1][x] == "]":
-        bigMoveUp(warehouse, x, y-1)
-        bigMoveUp(warehouse, x-1, y-1)
+    if warehouse[y-1][x] in ["[","]"]:
+        moveBigBoxUp(warehouse, x, y-1)
 
     if warehouse[y-1][x] == ".":
         warehouse[y-1][x] = warehouse[y][x]
-    warehouse[y][x] = "."
+        warehouse[y][x] = "."
     return warehouse
 
 
@@ -53,19 +48,20 @@ def bigMoveDown(warehouse, x, y):
     pass
 
 def moveBigBoxUp(warehouse, x, y):
-    if warehouse[y][x] == "[" and warehouse[y-1][x] == "." and warehouse[y-1][x+1] == ".":
-        warehouse[y-1][x] = "["
-        warehouse[y-1][x+1] = "]"
-        warehouse[y][x] = "."
-        warehouse[y][x+1] = "."
-    elif warehouse[y][x] == "]" and warehouse[y-1][x] == "." and warehouse[y-1][x-1] == ".":
-        warehouse[y-1][x-1] = "["
-        warehouse[y-1][x] = "]"
-        warehouse[x][y] = warehouse[x-1][y] = "."
-    elif warehouse[y-1][x] == '[' or warehouse[y-1][x] == ']':
+    if warehouse[y][x] == "[":
+        side = 1
+    elif warehouse[y][x] == "]":
+        side = -1
+    else:
+        return warehouse
+
+    if warehouse[y-1][x] in ["[","]"] or warehouse[y-1][x+side] in ["[","]"]:
         moveBigBoxUp(warehouse, x, y-1)
-        if warehouse[y-1][x] != "[" and warehouse[y-1][x] != "]":
-            warehouse[y-1][x] = warehouse[y][x]
-            warehouse[y][x] = "."
+        moveBigBoxUp(warehouse, x+side, y-1)
+
+    if warehouse[y-1][x] == "." and warehouse[y-1][x+side] == ".":
+        warehouse[y-1][x] = warehouse[y][x]
+        warehouse[y-1][x+side] = warehouse[y][x+side]
+        warehouse[y][x] = warehouse[y][x+side]= "."
 
     return warehouse
