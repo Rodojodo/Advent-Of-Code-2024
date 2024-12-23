@@ -1,7 +1,7 @@
 from utils import utils as ut
 
-warehouse = ut.txtTo2DWithType("warehouse.txt",str)
-instructions = list(ut.removeNewLines(open("instructions.txt", "r").read()))
+warehouse = ut.txtTo2DWithType("Day15/warehouse.txt",str)
+instructions = list(ut.removeNewLines(open("Day15/instructions.txt", "r").read()))
 
 def moveLeft(warehouse, x, y):
 

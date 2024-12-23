@@ -2,6 +2,7 @@
 def txtToLines(filename):
     file = open(filename, "r")
     text = file.read()
+    file.close()
     return text.split("\n")
 
 def changeLType(l, newType):
@@ -23,6 +24,7 @@ def txtTo2DWithType(path, newType):
     for i in f:
         data.append(changeLType(list(i.strip()), newType))
 
+    f.close()
     return data
 
 

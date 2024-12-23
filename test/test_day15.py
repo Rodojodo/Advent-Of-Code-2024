@@ -1,5 +1,6 @@
 import unittest
-from Part1 import moveLeft, moveRight, moveUp, moveDown, useInstructions, calcBoxes
+
+from Day15.Part1 import moveLeft, moveRight, moveUp, moveDown, useInstructions, calcBoxes
 from utils.utils import stringTo2DWithType, removeNewLines
 
 
@@ -152,7 +153,9 @@ class testMoves(unittest.TestCase):
 #...O..#
 ########"""
 
-        instructions = list(removeNewLines(open("testInstructions.txt", "r").read()))
+        f = open("Day15/testInstructions.txt", "r")
+        instructions = list(removeNewLines(f.read()))
+        f.close()
         self.assertEqual(stringTo2DWithType(expected, str), useInstructions(stringTo2DWithType(start, str), instructions))
 
 class testBoxes(unittest.TestCase):
