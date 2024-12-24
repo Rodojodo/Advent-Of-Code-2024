@@ -1,4 +1,5 @@
 import utils.utils as ut
+from Day15.Part1 import calcBoxes
 def scaleWarehouse(warehouse):
     newWarehouse = []
     for i in range(len(warehouse)):
@@ -16,7 +17,6 @@ def scaleWarehouse(warehouse):
             elif warehouse[i][j] == "O":
                 newWarehouse[i].append("[")
                 newWarehouse[i].append("]")
-    print(newWarehouse)
     return newWarehouse
 
 def bigMoveLeft(warehouse, x, y):
@@ -90,3 +90,22 @@ def checkMoveUpSafe(warehouse, x, y):
         return checkMoveUpSafe(warehouse, x, y-1)
     else:
         return checkMoveUpSafe(warehouse, x, y-1) and checkMoveUpSafe(warehouse, x+side, y-1)
+
+def useBigInstructions(warehouse, instructions):
+    while instructions:
+        [x, y] =ut.findCharIn2DArray(warehouse, "@")
+        if instructions[0] == "<":
+            warehouse = bigMoveLeft(warehouse, x, y)
+        elif instructions[0] == ">":
+            warehouse = bigMoveRight(warehouse, x, y)
+        elif instructions[0] == "^":
+            warehouse = bigMoveUp(warehouse, x, y)
+        elif instructions[0] == "v":
+            warehouse = bigMoveDown(warehouse, x, y)
+        instructions.pop(0)
+    return warehouse
+
+
+warehouse = scaleWarehouse(ut.txtTo2DWithType("Day15/part2Warehouse.txt",str))
+instructions = list(ut.removeNewLines(open("Day15/instructions.txt", "r").read()))
+print(calcBoxes(useBigInstructions(warehouse, instructions), "["))

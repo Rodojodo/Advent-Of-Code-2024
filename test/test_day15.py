@@ -1,7 +1,7 @@
 import unittest
 
 from Day15.Part1 import moveLeft, moveRight, moveUp, moveDown, useInstructions, calcBoxes
-from Day15.Part2 import scaleWarehouse, bigMoveLeft, bigMoveRight, bigMoveUp, bigMoveDown, moveBigBoxUp, checkMoveUpSafe
+from Day15.Part2 import scaleWarehouse, bigMoveLeft, bigMoveRight, bigMoveUp, bigMoveDown, moveBigBoxUp, checkMoveUpSafe, useBigInstructions
 from utils.utils import stringTo2DWithType, removeNewLines
 
 
@@ -294,6 +294,27 @@ class testMoves(unittest.TestCase):
         self.assertEqual(False, checkMoveUpSafe(stringTo2DWithType(notClear, str), 6, 3))
         self.assertEqual(False, checkMoveUpSafe(stringTo2DWithType(notClear, str), 7, 3))
 
+    def testUseBigInstructions(self):
+        start = """##############
+##......##..##
+##..........##
+##....[][]@.##
+##....[]....##
+##..........##
+##############"""
+        expected = """##############
+##...[].##..##
+##...@.[]...##
+##....[]....##
+##..........##
+##..........##
+##############"""
+
+        f = open("Day15/testPart2Instructions.txt", "r")
+        instructions = list(removeNewLines(f.read()))
+        f.close()
+        self.assertEqual(stringTo2DWithType(expected, str), useBigInstructions(stringTo2DWithType(start, str), instructions))
+
 class testBoxes(unittest.TestCase):
     def testCalcBoxes(self):
         larger = """##########
@@ -314,8 +335,8 @@ class testBoxes(unittest.TestCase):
 #...O..#
 #...O..#
 ########"""
-        self.assertEqual(10092, calcBoxes(stringTo2DWithType(larger, str)))
-        self.assertEqual(2028, calcBoxes(stringTo2DWithType(smaller, str)))
+        self.assertEqual(10092, calcBoxes(stringTo2DWithType(larger, str), "O"))
+        self.assertEqual(2028, calcBoxes(stringTo2DWithType(smaller, str), "O"))
 
 class testPart2(unittest.TestCase):
     def testScaleWarehouse(self):

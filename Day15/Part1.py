@@ -40,11 +40,11 @@ def useInstructions(warehouse, instructions):
     return warehouse
 
 
-def calcBoxes(warehouse):
-    boxes = ut.findObjectsIn2DArray(warehouse, "O")
+def calcBoxes(warehouse, target):
+    boxes = ut.findObjectsIn2DArray(warehouse, target)
     total = 0
     for i in boxes:
         total += i.x + i.y*100
     return total
 
-print(calcBoxes(useInstructions(warehouse, instructions)))
+print(calcBoxes(useInstructions(warehouse, instructions), "O"))
