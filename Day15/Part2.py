@@ -45,7 +45,16 @@ def bigMoveUp(warehouse, x, y):
 
 
 def bigMoveDown(warehouse, x, y):
-    pass
+    y = len(warehouse) - y -1
+    warehouse = ut.transpose(ut.reverse2DHorizontal(ut.transpose(warehouse)))
+    if warehouse[y-1][x] in ["[","]"]:
+        moveBigBoxUp(warehouse, x, y-1)
+
+    if warehouse[y-1][x] == ".":
+        warehouse[y-1][x] = warehouse[y][x]
+        warehouse[y][x] = "."
+    warehouse = ut.transpose(ut.reverse2DHorizontal(ut.transpose(warehouse)))
+    return warehouse
 
 def moveBigBoxUp(warehouse, x, y):
     if warehouse[y][x] == "[":
@@ -55,13 +64,29 @@ def moveBigBoxUp(warehouse, x, y):
     else:
         return warehouse
 
-    if warehouse[y-1][x] in ["[","]"] or warehouse[y-1][x+side] in ["[","]"]:
-        moveBigBoxUp(warehouse, x, y-1)
-        moveBigBoxUp(warehouse, x+side, y-1)
+    if checkMoveUpSafe(warehouse, x, y) and checkMoveUpSafe(warehouse, x+side, y):
+        if warehouse[y-1][x] in ["[","]"] or warehouse[y-1][x+side] in ["[","]"]:
+            moveBigBoxUp(warehouse, x, y-1)
+            moveBigBoxUp(warehouse, x+side, y-1)
 
-    if warehouse[y-1][x] == "." and warehouse[y-1][x+side] == ".":
         warehouse[y-1][x] = warehouse[y][x]
         warehouse[y-1][x+side] = warehouse[y][x+side]
-        warehouse[y][x] = warehouse[y][x+side]= "."
+        warehouse[y][x] = warehouse[y][x+side] = "."
 
     return warehouse
+
+
+def checkMoveUpSafe(warehouse, x, y):
+    if warehouse[y][x] not in ["[", "]"]:
+        return warehouse
+
+    side = 1 if warehouse[y][x] == "[" else -1
+
+    if warehouse[y][x] == "." or (warehouse[y-1][x] == "." and warehouse[y-1][x+side] == "."):
+        return True
+    elif warehouse[y-1][x] == "#" or warehouse[y-1][x+side] == "#":
+        return False
+    elif warehouse[y-1][x] == warehouse[y][x]:
+        return checkMoveUpSafe(warehouse, x, y-1)
+    else:
+        return checkMoveUpSafe(warehouse, x, y-1) and checkMoveUpSafe(warehouse, x+side, y-1)

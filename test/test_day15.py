@@ -1,7 +1,7 @@
 import unittest
 
 from Day15.Part1 import moveLeft, moveRight, moveUp, moveDown, useInstructions, calcBoxes
-from Day15.Part2 import scaleWarehouse, bigMoveLeft, bigMoveRight, bigMoveUp, bigMoveDown, moveBigBoxUp
+from Day15.Part2 import scaleWarehouse, bigMoveLeft, bigMoveRight, bigMoveUp, bigMoveDown, moveBigBoxUp, checkMoveUpSafe
 from utils.utils import stringTo2DWithType, removeNewLines
 
 
@@ -273,6 +273,26 @@ class testMoves(unittest.TestCase):
 ##############"""
         self.assertEqual(stringTo2DWithType(expected, str), moveBigBoxUp(stringTo2DWithType(start, str), 6, 4))
         self.assertEqual(stringTo2DWithType(expected, str), moveBigBoxUp(stringTo2DWithType(start, str), 7, 4))
+
+    def testCheckMoveUpSafe(self):
+        clear = """##############
+##......##..##
+##..........##
+##...[][]...##
+##....[]....##
+##..........##
+##############"""
+        notClear = """##############
+##......##..##
+##...[][]...##
+##....[]....##
+##..........##
+##..........##
+##############"""
+        self.assertTrue(True, checkMoveUpSafe(stringTo2DWithType(clear, str), 6, 4))
+        self.assertTrue(True, checkMoveUpSafe(stringTo2DWithType(clear, str), 7, 4))
+        self.assertEqual(False, checkMoveUpSafe(stringTo2DWithType(notClear, str), 6, 3))
+        self.assertEqual(False, checkMoveUpSafe(stringTo2DWithType(notClear, str), 7, 3))
 
 class testBoxes(unittest.TestCase):
     def testCalcBoxes(self):
